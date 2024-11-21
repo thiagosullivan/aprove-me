@@ -1,8 +1,9 @@
-import { IsEmail, IsString, IsUUID, Length } from 'class-validator';
+import { IsEmail, IsOptional, IsString, IsUUID, Length } from 'class-validator';
 
 export class AssignorDTO {
   @IsString()
   @IsUUID()
+  @IsOptional()
   id?: string;
 
   @IsString()
