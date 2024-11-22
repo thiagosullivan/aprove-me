@@ -70,9 +70,12 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="rounded-lg border border-solid p-12 shadow-lg">
+    <div className="w-full max-w-[400px] rounded-lg border border-solid px-6 py-12 shadow-lg">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full space-y-4"
+        >
           <div className="flex flex-col items-center">
             <Image
               src="/assets/logo-bankme.png"

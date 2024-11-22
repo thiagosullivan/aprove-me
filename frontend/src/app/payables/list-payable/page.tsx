@@ -61,7 +61,7 @@ const ListPayablePage = () => {
       {data?.length <= 0 ? (
         <div className="mx-auto mt-8 flex w-full justify-center">
           <p className="text-center">
-            Você ainda não possui nenhum pagável cadastrado.
+            Você ainda não possui nenhum recebível cadastrado.
           </p>
         </div>
       ) : (
@@ -94,7 +94,7 @@ const ListPayablePage = () => {
                   className="mt-6 flex items-center hover:text-bankmeBlue"
                 >
                   <Link2 size={18} className="mr-1 text-bankmeBlue" />
-                  <span className="underline">Abrir pagável</span>
+                  <span className="underline">Abrir recebível</span>
                 </Link>
               </div>
             );

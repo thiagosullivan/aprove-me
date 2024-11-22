@@ -39,16 +39,16 @@ const data = {
       ],
     },
     {
-      title: "Pagáveis",
+      title: "Recebiveis",
       url: "#",
       icon: File,
       items: [
         {
-          title: "Adicionar pagável",
+          title: "Adicionar recebível",
           url: "/payables/add-payable",
         },
         {
-          title: "Listar pagáveis",
+          title: "Listar recebiveis",
           url: "/payables/list-payable",
         },
       ],
