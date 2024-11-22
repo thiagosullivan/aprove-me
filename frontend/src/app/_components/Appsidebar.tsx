@@ -32,11 +32,11 @@ const data = {
       items: [
         {
           title: "Adicionar Cedente",
-          url: "#",
+          url: "/assignors/add-assignor",
         },
         {
           title: "Listar Cedentes",
-          url: "#",
+          url: "/assignors/list-assignors",
         },
       ],
     },

@@ -27,6 +27,7 @@ const LoginForm = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -41,8 +42,8 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data: FormSchema) => {
+    setLoading(true);
     try {
-      setLoading(true);
       const response = await fetch(`http://localhost:3001/integrations/auth`, {
         method: "POST",
         headers: {
@@ -57,15 +58,20 @@ const LoginForm = () => {
         localStorage.setItem("access_token", accessToken);
 
         setTimeout(() => {
-          setLoading(false);
           navigate("/");
+          // setLoading(false);
         }, 2000);
 
         console.log(accessToken);
+      } else {
+        setNotFound(true);
+        console.log("NÃO AUTORIZADO");
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
     }
+    // setLoading(false);
   };
 
   return (
@@ -81,52 +87,50 @@ const LoginForm = () => {
             />
             <p className="mt-4 font-bold text-bankmeBlue">Faça seu login</p>
           </div>
-          {loading ? (
-            <Loading />
-          ) : (
-            <>
-              <FormField
-                control={form.control}
-                name="login"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input placeholder="Login" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="relative">
-                      <FormControl>
-                        <Input
-                          placeholder="Senha"
-                          {...field}
-                          type={showPassword ? "text" : "password"}
-                        />
-                      </FormControl>
-                      <button
-                        className="absolute right-2 top-2"
-                        type="button"
-                        onClick={handleShowPassword}
-                      >
-                        {showPassword ? <EyeOff /> : <Eye />}
-                      </button>
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full">
-                Submit
-              </Button>
-            </>
+          <FormField
+            control={form.control}
+            name="login"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="Login" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <div className="relative">
+                  <FormControl>
+                    <Input
+                      placeholder="Senha"
+                      {...field}
+                      type={showPassword ? "text" : "password"}
+                    />
+                  </FormControl>
+                  <button
+                    className="absolute right-2 top-2"
+                    type="button"
+                    onClick={handleShowPassword}
+                  >
+                    {showPassword ? <EyeOff /> : <Eye />}
+                  </button>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {notFound && (
+            <p className="font-bold text-destructive">Usuário não encontrado</p>
           )}
+          <Button type="submit" className="w-full">
+            Submit
+          </Button>
+          {loading ? <Loading /> : ""}
         </form>
       </Form>
     </div>

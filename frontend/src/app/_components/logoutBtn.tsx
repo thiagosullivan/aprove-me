@@ -28,14 +28,14 @@ const LogoutBtn = () => {
   };
 
   return (
-    <div>
+    <>
       {isButtonVisible && (
         <Button onClick={handleLogout}>
           <LogOut />
           Log out
         </Button>
       )}
-    </div>
+    </>
   );
 };
 
