@@ -1,7 +1,7 @@
 "use client";
 import { Separator } from "@/app/_components/ui/separator";
 import { useAuth } from "@/app/context/AuthContext";
-import { fetchPayableData } from "@/app/utils/fetchData";
+import { fetchIndividualPayable } from "@/app/utils/fetchIndividualPayable";
 import { format } from "date-fns";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,7 +24,7 @@ const PayablePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedData: any = await fetchPayableData(id, token);
+        const fetchedData: any = await fetchIndividualPayable(id, token);
         setData(fetchedData);
       } catch (err) {
         setError("Erro ao buscar os dados");
