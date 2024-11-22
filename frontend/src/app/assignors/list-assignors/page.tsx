@@ -67,29 +67,29 @@ const ListAssignorPage = () => {
     <div className="px-6 py-4">
       <h2 className="text-center text-2xl font-bold"> Lista de Cedentes:</h2>
       {/* <p>{token}</p> */}
-      <div className="mt-6 grid grid-cols-2 flex-row flex-wrap gap-4 md:grid-cols-4 lg:grid-cols-5">
+      <div className="mt-6 grid grid-cols-1 flex-row flex-wrap gap-x-4 gap-y-6 md:grid-cols-3 lg:grid-cols-5">
         {data?.map((item, id) => {
           return (
             <div
               key={id}
-              className="max-w-[300px] rounded-lg border border-solid p-3 shadow-lg"
+              className="w-full rounded-lg border border-solid p-3 shadow-lg md:max-w-[300px]"
             >
               <h3 className="mb-2 text-center font-bold">{item.name}</h3>
               <div className="mb-3">
                 <span className="font-bold">Id:</span>
-                <p>{item.id}</p>
+                <p className="break-words">{item.id}</p>
               </div>
               <div className="mb-3">
                 <span className="font-bold">Documento:</span>
-                <p>{item.document}</p>
+                <p className="break-words">{item.document}</p>
               </div>
               <div className="mb-3">
                 <span className="font-bold">Email:</span>
-                <p>{item.email}</p>
+                <p className="break-words">{item.email}</p>
               </div>
               <div className="mb-3">
                 <span className="font-bold">Nome:</span>
-                <p>{item.phone}</p>
+                <p className="break-words">{item.phone}</p>
               </div>
             </div>
           );
