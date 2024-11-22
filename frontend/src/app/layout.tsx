@@ -7,6 +7,7 @@ import {
   SidebarTrigger,
 } from "./_components/ui/sidebar";
 import { AppSidebar } from "./_components/Appsidebar";
+import { AuthProvider } from "./context/AuthContext";
 
 const mulish = Mulish({
   subsets: ["latin-ext"],
@@ -25,15 +26,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${mulish.className} antialiased`}>
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
-            <SidebarTrigger />
-            <div className="flex h-full w-full flex-col overflow-hidden">
-              {children}
-            </div>
-          </SidebarInset>
-        </SidebarProvider>
+        <AuthProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <SidebarTrigger />
+              <div className="flex h-full w-full flex-col overflow-hidden">
+                {children}
+                <p></p>
+              </div>
+            </SidebarInset>
+          </SidebarProvider>
+        </AuthProvider>
       </body>
     </html>
   );
