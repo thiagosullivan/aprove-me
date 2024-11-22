@@ -1,74 +1,49 @@
 "use client";
-
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import router from "next/router";
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useContext,
-  ReactNode,
-} from "react";
+import { decodeJWT, DecodedToken } from "../utils/decodeJWT";
 
-// Define a tipagem do contexto
-interface AuthContextType {
-  isAuthenticated: boolean;
-  loading: boolean;
+interface AuthContextData {
+  user: DecodedToken | null;
+  setUser: React.Dispatch<React.SetStateAction<DecodedToken | null>>;
 }
 
-// Define a tipagem das props do provedor
-interface AuthProviderProps {
-  children: ReactNode;
-}
+const AuthContext = createContext<AuthContextData | undefined>(undefined);
 
-// Cria o contexto com um valor inicial vazio
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [user, setUser] = useState<DecodedToken | null>(null);
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // Estado de carregamento para verificar o token
 
-  // Função para verificar se o token JWT expirou
-  const isTokenExpired = (token: string): boolean => {
-    if (!token) return true;
-
-    try {
-      const payload = JSON.parse(atob(token.split(".")[1])); // Decodifica o payload
-      const currentTime = Math.floor(Date.now() / 1000); // Tempo atual em EPOCH
-      return payload.exp < currentTime; // Retorna true se o token expirou
-    } catch (error) {
-      console.error("Erro ao decodificar o token:", error);
-      return true;
-    }
-  };
-
-  // Verifica o token ao montar o componente
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("access_token");
-
-      if (token && isTokenExpired(token)) {
-        router.push("/login");
-        console.log("O token expirou.");
-        setIsAuthenticated(false);
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      const decoded = decodeJWT(token);
+      if (decoded && decoded.exp && decoded.exp * 1000 > Date.now()) {
+        setUser(decoded);
       } else {
-        console.log("O token ainda é válido.");
-        setIsAuthenticated(true);
+        localStorage.removeItem("access_token");
+        setUser(null);
+        router.push("/login"); // Redireciona para login se o token estiver expirado
       }
-      setLoading(false);
+    } else {
+      router.push("/login"); // Redireciona para login se não houver token
     }
-  }, []);
+    setLoading(false); // Define o loading como false após a verificação do token
+  }, [router]);
+
+  if (loading) return <div>Loading...</div>; // Exibe "Loading..." até terminar a verificação do token
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, loading }}>
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Hook para consumir o contexto
-export const useAuth = (): AuthContextType => {
+export const useAuth = (): AuthContextData => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth deve ser usado dentro de um AuthProvider");
