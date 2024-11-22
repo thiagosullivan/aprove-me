@@ -56,22 +56,24 @@ const PayablePage = () => {
 
       <div className="mx-auto mt-8 flex w-full flex-col gap-y-4 rounded-lg border border-solid p-6 shadow-lg md:max-w-[800px]">
         <div className="flex items-center">
-          <p className="mr-2 text-2xl font-bold">ID:</p>
+          <p className="mr-2 text-2xl font-bold text-bankmeBlue">ID:</p>
           <p className="text-2xl">{data?.id}</p>
         </div>
         <Separator />
         <div className="flex items-center">
-          <p className="mr-2 text-2xl font-bold">Valor:</p>
+          <p className="mr-2 text-2xl font-bold text-bankmeBlue">Valor:</p>
           <p className="text-2xl">{data?.value}</p>
         </div>
         <Separator />
         <div className="flex items-center">
-          <p className="mr-2 text-2xl font-bold">Data de emissão:</p>
+          <p className="mr-2 text-2xl font-bold text-bankmeBlue">
+            Data de emissão:
+          </p>
           <p className="text-2xl">{formatDate(data?.emissionDate)}</p>
         </div>
         <Separator />
         <div className="flex">
-          <p className="mr-2 text-2xl font-bold">Cedente ID:</p>
+          <p className="mr-2 text-2xl font-bold text-bankmeBlue">Cedente ID:</p>
           <p className="text-2xl">{data?.assignorId}</p>
         </div>
       </div>
