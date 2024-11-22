@@ -16,12 +16,10 @@ import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 import LogoutBtn from "./logoutBtn";
 
-// This is sample data.
 const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    // avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
     {

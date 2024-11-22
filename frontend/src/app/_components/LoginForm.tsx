@@ -59,19 +59,14 @@ const LoginForm = () => {
 
         setTimeout(() => {
           navigate("/");
-          // setLoading(false);
         }, 2000);
-
-        console.log(accessToken);
       } else {
         setNotFound(true);
-        console.log("NÃO AUTORIZADO");
         setLoading(false);
       }
     } catch (error) {
       console.log(error);
     }
-    // setLoading(false);
   };
 
   return (
@@ -128,7 +123,7 @@ const LoginForm = () => {
             <p className="font-bold text-destructive">Usuário não encontrado</p>
           )}
           <Button type="submit" className="w-full">
-            Submit
+            Entrar
           </Button>
           {loading ? <Loading /> : ""}
         </form>

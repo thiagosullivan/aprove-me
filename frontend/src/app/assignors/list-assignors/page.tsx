@@ -19,8 +19,6 @@ const ListAssignorPage = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  console.log(data, "TOKEN");
-
   useEffect(() => {
     const fetchData = async () => {
       if (!token) {
@@ -66,7 +64,6 @@ const ListAssignorPage = () => {
   return (
     <div className="px-6 py-4">
       <h2 className="text-center text-2xl font-bold"> Lista de Cedentes:</h2>
-      {/* <p>{token}</p> */}
       <div className="mt-6 grid grid-cols-1 flex-row flex-wrap gap-x-4 gap-y-6 md:grid-cols-3 lg:grid-cols-5">
         {data?.map((item, id) => {
           return (

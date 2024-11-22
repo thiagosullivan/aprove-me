@@ -63,9 +63,6 @@ const AddAssignorsPage = () => {
   });
 
   const onSubmit = async (data: FormSchema) => {
-    console.log(data, "FORM DATA");
-    console.log(token, "TOKEN");
-
     setLoading(true);
     try {
       const response = await fetch(
@@ -152,15 +149,9 @@ const AddAssignorsPage = () => {
                 </FormItem>
               )}
             />
-            {/* {notFound && (
-              <p className="font-bold text-destructive">
-                Usuário não encontrado
-              </p>
-            )} */}
             <Button type="submit" className="w-full">
-              Submit
+              Enviar
             </Button>
-            {/* {loading ? <Loading /> : ""} */}
           </form>
         </Form>
       </div>
