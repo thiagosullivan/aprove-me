@@ -15,6 +15,8 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
 const formSchema = z.object({
   login: z.string().min(1, {
@@ -29,6 +31,12 @@ type FormSchema = z.infer<typeof formSchema>;
 
 const LoginForm = () => {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,8 +58,8 @@ const LoginForm = () => {
       if (response.ok) {
         const json = await response.json();
         const accessToken = json.access_token; // Acesse o token retornado pela API
+        console.log(accessToken);
 
-        // Salve no localStorage
         if (typeof window !== "undefined") {
           // Certifique-se de estar no lado do cliente
           localStorage.setItem("access_token", accessToken);
@@ -62,7 +70,6 @@ const LoginForm = () => {
     } catch (error) {
       console.log(error);
     }
-    // console.log(data.login);
   };
 
   return (
@@ -95,9 +102,22 @@ const LoginForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormControl>
-                  <Input placeholder="Senha" {...field} type="password" />
-                </FormControl>
+                <div className="relative">
+                  <FormControl>
+                    <Input
+                      placeholder="Senha"
+                      {...field}
+                      type={showPassword ? "text" : "password"}
+                    />
+                  </FormControl>
+                  <button
+                    className="absolute right-2 top-2"
+                    type="button"
+                    onClick={handleShowPassword}
+                  >
+                    {showPassword ? <Eye /> : <EyeOff />}
+                  </button>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
