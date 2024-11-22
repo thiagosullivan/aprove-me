@@ -1,6 +1,5 @@
 "use client";
 
-import { Suspense } from "react";
 import withAuth from "./utils/withAuth";
 import Link from "next/link";
 import { Button } from "./_components/ui/button";
@@ -14,22 +13,31 @@ const Home = () => {
       </h1>
       <div className="mx-auto mt-14 w-full max-w-[600px]">
         <div className="flex flex-wrap justify-center gap-6">
-          <Button className="w-[210px]" asChild>
-            <Link href="/payables/list-payable">
-              Acesse a lista de recebiveis
-            </Link>
-          </Button>
-          <Button className="w-[210px]" asChild>
-            <Link href="/payables/add-payable">Cadastre um novo recebível</Link>
-          </Button>
-          <Button className="w-[210px]" asChild>
-            <Link href="/assignors/list-assignors">
-              Acesse a lista de cedentes
-            </Link>
-          </Button>
-          <Button className="w-[210px]" asChild>
-            <Link href="/assignors/add-assignor">Cadastre um novo cedente</Link>
-          </Button>
+          <Link
+            className="w-[220px] rounded-lg bg-bankmeBlue p-4 text-center text-sm font-bold text-white"
+            href="/payables/list-payable"
+          >
+            Acesse a lista de recebiveis
+          </Link>
+          <Link
+            className="w-[220px] rounded-lg bg-bankmeBlue p-4 text-center text-sm font-bold text-white"
+            href="/payables/add-payable"
+          >
+            Cadastre um novo recebível
+          </Link>
+
+          <Link
+            className="w-[220px] rounded-lg bg-bankmeBlue p-4 text-center text-sm font-bold text-white"
+            href="/assignors/list-assignors"
+          >
+            Acesse a lista de cedentes
+          </Link>
+          <Link
+            className="w-[220px] rounded-lg bg-bankmeBlue p-4 text-center text-sm font-bold text-white"
+            href="/assignors/add-assignor"
+          >
+            Cadastre um novo cedente
+          </Link>
         </div>
       </div>
     </div>
