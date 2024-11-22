@@ -4,7 +4,9 @@ import { useRouter } from "next/navigation";
 import { decodeJWT, DecodedToken } from "../utils/decodeJWT";
 
 interface AuthContextData {
+  token: string | null;
   user: DecodedToken | null;
+  setToken: React.Dispatch<React.SetStateAction<string | null>>;
   setUser: React.Dispatch<React.SetStateAction<DecodedToken | null>>;
 }
 
@@ -13,31 +15,34 @@ const AuthContext = createContext<AuthContextData | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<DecodedToken | null>(null);
   const router = useRouter();
-  const [loading, setLoading] = useState(true); // Estado de carregamento para verificar o token
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-      const decoded = decodeJWT(token);
+    const storedToken = localStorage.getItem("access_token");
+    if (storedToken) {
+      setToken(storedToken);
+      const decoded = decodeJWT(storedToken);
       if (decoded && decoded.exp && decoded.exp * 1000 > Date.now()) {
         setUser(decoded);
       } else {
         localStorage.removeItem("access_token");
+        setToken(null);
         setUser(null);
-        router.push("/login"); // Redireciona para login se o token estiver expirado
+        router.push("/login");
       }
     } else {
-      router.push("/login"); // Redireciona para login se não houver token
+      router.push("/login");
     }
-    setLoading(false); // Define o loading como false após a verificação do token
+    setLoading(false);
   }, [router]);
 
-  if (loading) return <div>Loading...</div>; // Exibe "Loading..." até terminar a verificação do token
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ token, user, setToken, setUser }}>
       {children}
     </AuthContext.Provider>
   );
