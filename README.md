@@ -1,9 +1,9 @@
-## Bankme teste
+# Bankme teste
 
 Olá,
 sou o Thiago Santos e esse é meu teste para o Bank me
 
-# Backend
+## Backend
 
 Para rodar o backend basta entrar na pasta de backend
 Rodar o comando para rodar as dependências necessárias
@@ -24,7 +24,7 @@ O backend estará rodando na
 porta 3001
 ```
 
-# Frontend
+## Frontend
 
 Para rodar o frontend basta entrar na pasta de frontend
 Rodar o comando para rodar as dependências necessárias
@@ -45,7 +45,7 @@ O frontend estará rodando na
 porta 3000
 ```
 
-# Tecnologias
+## Tecnologias
 
 O backend foi feito NestJS, utilizando o Prisma como ORM e o SQLite como bando de dados.
 No sistema de login um JWT é gerado com um prazo de validação de 1 minuto antes de expirar,
