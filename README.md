@@ -24,6 +24,14 @@ O backend estará rodando na
 porta 3001
 ```
 
+Info do arquivo .env
+
+```sh
+JWT_SECRET="69c82c8860b1c0ec16c5a91e046c0783"
+
+DATABASE_URL="file:./dev.db"
+```
+
 ## Frontend
 
 Para rodar o frontend basta entrar na pasta de frontend
