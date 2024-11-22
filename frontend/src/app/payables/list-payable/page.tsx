@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
+import { fetchPayables } from "@/app/utils/fetchPayables";
 
 interface DataType {
   id?: string;
@@ -14,16 +15,13 @@ interface DataType {
 
 const ListPayablePage = () => {
   const { token } = useAuth();
-  console.log(token, "TOKEN 1");
   const [data, setData] = useState<DataType[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  console.log(data, "TOKEN");
-
   useEffect(() => {
-    const fetchData = async () => {
+    const loadData = async () => {
       if (!token) {
         setError("Token não encontrado");
         setLoading(false);
@@ -32,23 +30,7 @@ const ListPayablePage = () => {
       }
 
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-        const response = await fetch(
-          `http://localhost:3001/integrations/payable`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          },
-        );
-
-        if (!response.ok) {
-          throw new Error("Falha na requisição");
-        }
-
-        const result = await response.json();
+        const result = await fetchPayables(token);
         setData(result);
       } catch (error: any) {
         setError(error.message);
@@ -57,7 +39,7 @@ const ListPayablePage = () => {
       }
     };
 
-    fetchData();
+    loadData();
   }, [token, router]);
 
   const formatDate = (dateString: string) => {
@@ -68,15 +50,13 @@ const ListPayablePage = () => {
     }
   };
 
-  console.log(data, "PAYABLES");
-
   if (loading) {
     return <div>Carregando...</div>;
   }
   return (
     <div className="px-6 py-4">
       <h2 className="text-center text-2xl font-bold"> Lista de Recebíveis:</h2>
-      {/* <p>{token}</p> */}
+
       <div className="mt-6 grid grid-cols-1 flex-row flex-wrap gap-x-4 gap-y-6 md:grid-cols-3 lg:grid-cols-5">
         {data?.map((item, id) => {
           return (
