@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${mulish.className} antialiased`}>
+      <body className={`${mulish.className} overflow-x-hidden antialiased`}>
         <AuthProvider>
           <SidebarProvider>
             <AppSidebar />
