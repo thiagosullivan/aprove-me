@@ -47,11 +47,11 @@ const data = {
       items: [
         {
           title: "Adicionar pagável",
-          url: "#",
+          url: "/payables/add-payable",
         },
         {
           title: "Listar pagáveis",
-          url: "#",
+          url: "/payables/list-payable",
         },
       ],
     },
